@@ -4,7 +4,7 @@ import { rows } from "./rows";
 
 export default function GammaStatistics({ data }: any) {
   const calcGamma = (n1: number, n2: number, d: number) => {
-    return (n1 * n2) / d;
+    return Number((n1 * n2) / d).toFixed(1);
   };
   const gammaData = data.map((record: any) => {
     let gamma = calcGamma(
@@ -19,6 +19,5 @@ export default function GammaStatistics({ data }: any) {
   });
 
   const gammaStats = calculateClassWiseStatistic(gammaData, "Alcohol", "gamma");
-
   return <Table data={gammaStats} rows={rows()} />;
 }

@@ -16,7 +16,7 @@ export const calculateMedian = (numbers: any) => {
 
   if (length % 2 === 1) {
     // For odd-length arrays, return the middle element
-    return (sortedNumbers[Math.floor(length / 2)]).toFixed(3);
+    return sortedNumbers[Math.floor(length / 2)].toFixed(3);
   } else {
     // For even-length arrays, return the average of the two middle elements
     const middle1 = sortedNumbers[length / 2 - 1];
@@ -32,6 +32,8 @@ export const calculateMode = (numbers: any) => {
 
   const frequencyMap = new Map();
 
+  console.log('mode numbers=>',numbers);
+
   // Count the occurrences of each number
   numbers.forEach((num) => {
     frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
@@ -39,9 +41,13 @@ export const calculateMode = (numbers: any) => {
 
   let maxFrequency = 0;
   let modes: any = [];
+  console.log('frequencyMap->',frequencyMap);
+  
 
   // Find the numbers with the highest frequency
   frequencyMap.forEach((frequency, num) => {
+    console.log('frequency',frequency);
+    
     if (frequency > maxFrequency) {
       maxFrequency = frequency;
       modes = [num];
@@ -81,9 +87,9 @@ export const calculateClassWiseStatistic = (
 ) => {
   return Object.entries(groupBy(array, key)).map(
     ([groupName, groupData]: any) => {
-      const mean = calculateMean(groupData?.map((e: any) => e[calcKey]));
-      const median = calculateMedian(groupData?.map((e: any) => e[calcKey]));
-      const mode = calculateMode(groupData?.map((e: any) => e[calcKey]));
+      const mean = calculateMean(groupData?.map((e: any) => Number(e[calcKey])));
+      const median = calculateMedian(groupData?.map((e: any) => Number(e[calcKey])));
+      const mode = calculateMode(groupData?.map((e: any) => Number(e[calcKey])));
       return { groupName, mean, median, mode };
     }
   );
